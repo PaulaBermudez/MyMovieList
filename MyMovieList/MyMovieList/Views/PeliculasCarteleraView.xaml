@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="vistapeliculascartelera"
+             xmlns:local="clr-namespace:MyMovieList"
+             BindingContext="{Binding Source={x:Static local:App.Locator}, Path=PeliculasCartelera}"
+             x:Class="MyMovieList.Views.PeliculasCarteleraView">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Black">
+            <ListView ItemsSource="{Binding Peliculas}" HasUnevenRows="True" RowHeight="100">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding backdrop_path, StringFormat='https://image.tmdb.org/t/p/w200{0}'}"
+                                       HeightRequest="100" WidthRequest="100"/>
+                                <StackLayout Orientation="Vertical" Margin="0,15,0,0">
+                                    <Label Text="{Binding Title}" TextColor="White"
+                                           FontSize="15"/>
+                                    <Label Text="{Binding ReleaseDate, StringFormat='{0:dd/MM/yyyy}'}" TextColor="White"
+                                           FontSize="15"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding vote_average}" TextColor="White"
+                                               FontSize="15" />
+                                        <Image Source="estrella.png" HeightRequest="20" WidthRequest="15"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
