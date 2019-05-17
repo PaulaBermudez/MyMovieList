@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using TMDbLib.Objects.General;
+using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 using Xamarin.Forms;
 
@@ -47,8 +48,10 @@ namespace MyMovieList.ViewModels
             {
                 return new Command(async (pelicula) => {
                     DetallesPeliculaProximamente view = new DetallesPeliculaProximamente();
-                    PeliculaProximamente viewmodel = new PeliculaProximamente();
-                    viewmodel.Pelicula = pelicula as SearchMovie;
+                    PeliculaViewModel viewmodel = new PeliculaViewModel();
+                    SearchMovie movie = pelicula as SearchMovie;
+                    Movie peli = await this.repo.DetallesPelicula(movie.Id);
+                    viewmodel.Pelicula = peli as Movie;
                     view.BindingContext = viewmodel;
                     await Application.Current.MainPage.Navigation.PushModalAsync(view);
 

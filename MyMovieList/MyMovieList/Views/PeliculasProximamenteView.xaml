@@ -6,7 +6,7 @@
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=PeliculasProximamente}"
              x:Class="MyMovieList.Views.PeliculasProximamenteView">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#171940">
+        <StackLayout BackgroundColor="#2A2B2A">
             <ListView ItemsSource="{Binding PeliculasProx}" HasUnevenRows="True" RowHeight="100">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -15,12 +15,12 @@
                                 <Image Source="{Binding backdrop_path, StringFormat='https://image.tmdb.org/t/p/w200{0}'}"
                                        HeightRequest="100" WidthRequest="100" Margin="15,0,15,0"/>
                                 <StackLayout Orientation="Vertical" Margin="0,15,0,0">
-                                    <Label Text="{Binding Title}" TextColor="#683598"
+                                    <Label Text="{Binding Title}" TextColor="#8C7291"
                                            FontSize="15"/>
-                                    <Label Text="{Binding ReleaseDate, StringFormat='{0:dd/MM/yyyy}'}" TextColor="White"
+                                    <Label Text="{Binding ReleaseDate, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#C99DA3"
                                            FontSize="15"/>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding vote_average}" TextColor="White"
+                                        <Label Text="{Binding vote_average}" TextColor="#E9E0CE"
                                                FontSize="15" />
                                         <Image Source="estrella.png" HeightRequest="20" WidthRequest="15"/>
                                     </StackLayout>

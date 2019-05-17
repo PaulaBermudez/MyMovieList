@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TMDbLib.Objects.General;
+using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 
 namespace MyMovieList.Repositories
@@ -123,5 +124,24 @@ namespace MyMovieList.Repositories
                 return null;
             }
         }
+
+        public async Task<Movie> DetallesPelicula(int id)
+        {
+            String peticion = "api/Peliculas/DetallesPelicula/" + id;
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                String json = await response.Content.ReadAsStringAsync();
+                Movie pelicula = JsonConvert.DeserializeObject<Movie>(json);
+                return pelicula;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
     }
 }
