@@ -23,7 +23,7 @@ namespace MyMovieList
         {
             InitializeComponent();
 
-            MainPage = new LoginView();
+            MainPage = new Tabbed();
         }
 
         protected override void OnStart()

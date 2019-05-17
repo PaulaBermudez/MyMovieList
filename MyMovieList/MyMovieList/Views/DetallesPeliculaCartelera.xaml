@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMovieList.Views.DetallesPeliculaCartelera">
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="{Binding Pelicula.poster_path, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
+                                      HeightRequest="300" WidthRequest="250" />
+            <Label Text="{Binding Pelicula.Title}"
+                   FontSize="30"
+                   TextColor="Black"
+                HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding Pelicula.overview}"
+                   FontSize="15"
+                   TextColor="Black"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
