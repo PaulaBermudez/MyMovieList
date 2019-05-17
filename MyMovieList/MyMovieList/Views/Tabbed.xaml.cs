@@ -15,7 +15,7 @@ namespace MyMovieList.Views
         public Tabbed ()
         {
             InitializeComponent();
-            BarBackgroundColor = Color.FromHex("#E04ECA");
+            BarBackgroundColor = Color.FromHex("#996888");
         }
     }
 }

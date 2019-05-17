@@ -11,6 +11,7 @@ using TMDbLib.Objects.Search;
 using System.Linq;
 using Xamarin.Forms;
 using MyMovieList.Views;
+using TMDbLib.Objects.Movies;
 
 namespace MyMovieList.ViewModels
 {
@@ -43,14 +44,17 @@ namespace MyMovieList.ViewModels
             }
         }
 
+
         public Command DetallesPelicula
         {
             get
             {
                 return new Command(async (pelicula) => {
                     DetallesPeliculaPopular view = new DetallesPeliculaPopular();
-                    ListaViewModel viewmodel = new ListaViewModel();
-                    viewmodel.Lista = pelicula as SearchMovie;
+                    PeliculaViewModel viewmodel = new PeliculaViewModel();
+                    SearchMovie movie = pelicula as SearchMovie;
+                    Movie peli = await this.repo.DetallesPelicula(movie.Id);
+                    viewmodel.Pelicula = peli as Movie;
                     view.BindingContext = viewmodel;
                     await Application.Current.MainPage.Navigation.PushModalAsync(view);
 

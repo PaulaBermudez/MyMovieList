@@ -4,15 +4,13 @@
              x:Class="MyMovieList.Views.DetallesPeliculaCartelera">
     <ContentPage.Content>
         <StackLayout>
-            <Image Source="{Binding Pelicula.poster_path, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
+            <Image Source="{Binding Pelicula.PosterPath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
                                       HeightRequest="300" WidthRequest="250" />
-            <Label Text="{Binding Pelicula.Title}"
+            <Label Text="{Binding Pelicula.Budget}"
                    FontSize="30"
                    TextColor="Black"
                 HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding Pelicula.overview}"
-                   FontSize="15"
-                   TextColor="Black"/>
+            <Label Text="Holi"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

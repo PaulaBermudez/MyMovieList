@@ -3,25 +3,33 @@ using MyMovieList.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TMDbLib.Objects.Search;
+using System.Threading.Tasks;
+using TMDbLib.Objects.Movies;
 
 namespace MyMovieList.ViewModels
 {
-    public class PeliculaProximamente:ViewModelBase
+    public class PeliculaViewModel : ViewModelBase
     {
         RepositoryMyMovieList repo;
 
-        public PeliculaProximamente()
+        public PeliculaViewModel()
         {
             this.repo = new RepositoryMyMovieList();
             if(Pelicula == null)
             {
-                Pelicula = new SearchMovie();
+                Pelicula = new Movie();
             }
+            Task.Run(async () => {
+                await this.CargarPelicula();
+            });
         }
-
-        private SearchMovie _Pelicula;
-        public SearchMovie Pelicula
+        private async Task CargarPelicula()
+        {
+            Movie pelicula = await this.repo.DetallesPelicula(this.Pelicula.Id);
+            this.Pelicula = pelicula;
+        }
+        private Movie _Pelicula;
+        public Movie Pelicula
         {
             get
             {
