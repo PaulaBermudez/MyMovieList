@@ -1,5 +1,6 @@
 ﻿using MyMovieList.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,7 +30,35 @@ namespace MyMovieList.Repositories
                 new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
         }
-
+        public async Task<String> GetToken(String usuario
+            , String password)
+        {
+            using (HttpClient client = this.GetHttpClient())
+            {
+                client.BaseAddress = new Uri(this.urlapi);
+                LoginModel login = new LoginModel();
+                login.NombreUsuario = usuario;
+                login.Password = password;
+                String json = JsonConvert.SerializeObject(login);
+                StringContent content =
+                    new StringContent(json
+                    , System.Text.Encoding.UTF8, "application/json");
+                String peticion = "Auth/Login";
+                HttpResponseMessage response =
+                    await client.PostAsync(peticion, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido =
+                        await response.Content.ReadAsStringAsync();
+                    var jObject = JObject.Parse(contenido);
+                    return jObject.GetValue("response").ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         public async Task<SearchContainer<SearchMovie>> GetPeliculasPopulares()
         {
             String peticion = "api/Peliculas/PeliculasPopulares";
