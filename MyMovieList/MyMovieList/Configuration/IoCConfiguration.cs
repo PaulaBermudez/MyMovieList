@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MyMovieList.Services;
 using MyMovieList.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,13 @@ namespace MyMovieList.Configuration
             builder.RegisterType<ListasViewModel>();
             builder.RegisterType<PeliculasCartelera>();
             builder.RegisterType<PeliculasProximamente>();
+            builder.RegisterType<SessionService>();
             this.container = builder.Build();
         }
-
+        public SessionService SessionService
+        {
+            get { return this.container.Resolve<SessionService>(); }
+        }
         public ListasViewModel ListasViewModel
         {
             get

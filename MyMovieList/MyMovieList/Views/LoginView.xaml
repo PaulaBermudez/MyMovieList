@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MyMovieList.ViewModels"
+             x:Class="MyMovieList.Views.LoginView">
+    <ContentPage.BindingContext>
+        <viewmodels:UsuarioViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+            <Label Text="Usuario" HorizontalOptions="CenterAndExpand"/>
+            <Entry Text="{Binding Usuario.NombreUsuario}" HorizontalOptions="FillAndExpand"/>
+            <Label Text="Password" HorizontalOptions="CenterAndExpand"/>
+            <Entry Text="{Binding Usuario.Password}" HorizontalOptions="FillAndExpand"/>
+            <Button Command="{Binding IniciarSesion}" Text="Login" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Error}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
