@@ -59,6 +59,17 @@ namespace MyMovieList.Repositories
                 }
             }
         }
+        public async Task CrearUsuario(Usuario user)
+        {
+            String jsonusuario = JsonConvert.SerializeObject(user, Formatting.Indented);
+            byte[] bufferusuario = Encoding.UTF8.GetBytes(jsonusuario);
+            ByteArrayContent content = new ByteArrayContent(bufferusuario);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            String peticion = "api/Usuarios/CrearUsuario";
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.PostAsync(uri, content);
+        }
         public async Task<SearchContainer<SearchMovie>> GetPeliculasPopulares()
         {
             String peticion = "api/Peliculas/PeliculasPopulares";

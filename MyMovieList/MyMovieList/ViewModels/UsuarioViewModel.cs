@@ -30,6 +30,28 @@ namespace MyMovieList.ViewModels
                 OnPropertyChanged("Usuario");
             }
         }
+        public Command NuevoUsuario
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    if (this.Usuario.Password == this.Usuario.Password2 && this.Usuario.Email.Contains("@"))
+                    {
+                        await this.repo.CrearUsuario(this.Usuario);
+                        this.Error = "Usuario creado";
+                    }
+                    else if (this.Usuario.Password != this.Usuario.Password2)
+                    {
+                        this.Error = "Las contraseñas no coinciden";
+                    }
+                    else
+                    {
+                        this.Error = "El email no es válido";
+                    }
+                });
+            }
+        }
         public Command IniciarSesion
         {
             get
