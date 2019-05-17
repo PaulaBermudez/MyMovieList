@@ -16,10 +16,12 @@ namespace MyMovieList.Repositories
     public class RepositoryMyMovieList
     {
         String urlapi;
+        private MediaTypeWithQualityHeaderValue headerjson;
 
         public RepositoryMyMovieList()
         {
             this.urlapi = "https://mymovielistapi.azurewebsites.net/";
+            this.headerjson = new MediaTypeWithQualityHeaderValue("application/json");
         }
 
         private HttpClient GetHttpClient()
@@ -110,6 +112,44 @@ namespace MyMovieList.Repositories
             else
             {
                 return null;
+            }
+
+        }
+        public async Task<SearchContainer<SearchMovie>> BuscarPeliculas(String busqueda)
+        {
+            SearchContainer<SearchMovie> resultados = await this.CallApi<SearchContainer<SearchMovie>>("api/Peliculas/" + busqueda, null);
+            return resultados;
+        }
+
+        private async Task<T> CallApi<T>(String peticion, String token)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(this.urlapi);
+                client.DefaultRequestHeaders.Accept.Clear();
+                MediaTypeWithQualityHeaderValue headerjson = new MediaTypeWithQualityHeaderValue("application/json");
+                client.DefaultRequestHeaders.Accept.Add(headerjson);
+
+                if (token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                }
+
+                HttpResponseMessage response = await client.GetAsync(peticion);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    String content = await response.Content.ReadAsStringAsync();
+                    //DESERIALIZAR LOS DATOS CON JSONCONVERT
+                    T datos = JsonConvert.DeserializeObject<T>(content);
+                    //T datos = await response.Content.ReadAsStringAsync();
+                    return (T)Convert.ChangeType(datos, typeof(T));
+
+                }
+                else
+                {
+                    return default(T);
+                }
             }
         }
     }

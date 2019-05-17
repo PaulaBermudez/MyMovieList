@@ -5,10 +5,23 @@
     <MasterDetailPage.Master>
         <ContentPage Title="Menu principal">
             <StackLayout>
-                <Label Text="My Moview List" 
+                <StackLayout BackgroundColor="Blue">
+                <Button Text="My Movie List" 
                 HorizontalOptions="CenterAndExpand"
                        FontSize="35"
-                       />
+                        FontFamily="Poppins"
+                        BackgroundColor="Transparent"
+                        x:Name="btnMML">
+                </Button>
+                </StackLayout>
+                <SearchBar Placeholder="Buscar Pelicula"
+                           SearchButtonPressed="SearchBar_SearchButtonPressed"
+                           x:Name="sbBuscar"></SearchBar>
+                <!--<Label Text="My Moview List" 
+                HorizontalOptions="CenterAndExpand"
+                       FontSize="35"
+                       x:Name="lblMML"
+                       />-->
                 <ListView x:Name="lsvmenu">
                     <ListView.ItemTemplate>
                         <DataTemplate>
