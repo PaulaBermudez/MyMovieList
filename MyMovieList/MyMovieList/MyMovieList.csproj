@@ -36,7 +36,7 @@
     <EmbeddedResource Update="Views\LoginView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MasterPage.xaml">
+    <EmbeddedResource Update="Views\PaginaMaestra.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PeliculasCarteleraView.xaml">

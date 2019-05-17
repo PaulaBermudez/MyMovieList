@@ -1,20 +1,20 @@
-﻿using System;
+﻿using MyMovieList.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyMovieList.Models;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MyMovieList.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MasterPage : MasterDetailPage
-    {
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class PaginaMaestra : MasterDetailPage
+	{
         public List<PaginaMenu> MiMenu { get; set; }
-
-        public MasterPage()
+        public PaginaMaestra ()
         {
             InitializeComponent();
 
@@ -34,13 +34,14 @@ namespace MyMovieList.Views
 
         }
 
-    private void Lsvmenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-    {
+        private void Lsvmenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
             PaginaMenu pagina = e.SelectedItem as PaginaMenu;
 
             Detail = new NavigationPage((Page)Activator.CreateInstance(pagina.Pagina));
 
             IsPresented = false;
         }
+    }
 }
-}
+
