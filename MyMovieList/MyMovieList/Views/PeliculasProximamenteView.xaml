@@ -6,16 +6,16 @@
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=PeliculasProximamente}"
              x:Class="MyMovieList.Views.PeliculasProximamenteView">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Black">
+        <StackLayout BackgroundColor="#171940">
             <ListView ItemsSource="{Binding PeliculasProx}" HasUnevenRows="True" RowHeight="100">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
                                 <Image Source="{Binding backdrop_path, StringFormat='https://image.tmdb.org/t/p/w200{0}'}"
-                                       HeightRequest="100" WidthRequest="100"/>
+                                       HeightRequest="100" WidthRequest="100" Margin="15,0,15,0"/>
                                 <StackLayout Orientation="Vertical" Margin="0,15,0,0">
-                                    <Label Text="{Binding Title}" TextColor="White"
+                                    <Label Text="{Binding Title}" TextColor="#683598"
                                            FontSize="15"/>
                                     <Label Text="{Binding ReleaseDate, StringFormat='{0:dd/MM/yyyy}'}" TextColor="White"
                                            FontSize="15"/>
@@ -25,6 +25,13 @@
                                         <Image Source="estrella.png" HeightRequest="20" WidthRequest="15"/>
                                     </StackLayout>
                                 </StackLayout>
+                                <Image Source="detalles.png" HorizontalOptions="EndAndExpand"
+                                       WidthRequest="30" HeightRequest="35" Margin="0,0,15,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding .}"
+                                        Command="{Binding BindingContext.DetallesPelicula, Source={x:Reference vistapeliculasproximamente}}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

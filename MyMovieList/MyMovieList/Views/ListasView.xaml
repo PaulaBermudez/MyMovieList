@@ -7,7 +7,7 @@
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=ListasViewModel}"
              x:Class="MyMovieList.Views.ListasView">
     <ContentPage.Content>
-        <StackLayout x:Name="fondo" BackgroundColor="#171940">
+        <StackLayout BackgroundColor="#171940">
             <ListView ItemsSource="{Binding Listas}" HasUnevenRows="True" RowHeight="100">
                 <ListView.ItemTemplate>
                     <DataTemplate>
