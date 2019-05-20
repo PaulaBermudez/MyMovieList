@@ -3,15 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMovieList.Views.DetallesPeliculaProximamente">
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+            <StackLayout BackgroundColor="#2A2B2A">
 
-            <Image Source="{Binding Pelicula.PosterPath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
-                                      HeightRequest="300" WidthRequest="250" />
-            <Label Text="{Binding Pelicula.Budget}"
-                   FontSize="30"
-                   TextColor="Black"
-                HorizontalOptions="CenterAndExpand" />
-            <Label Text="Holi"/>
-        </StackLayout>
+                <Image Source="{Binding Pelicula.PosterPath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
+                                          HeightRequest="300" WidthRequest="250" 
+                       Margin="0,20,0,0"/>
+                <Label Text="{Binding Pelicula.Title}"
+                       FontSize="30"
+                       TextColor="#8C7291"
+                    HorizontalOptions="CenterAndExpand" />
+                <StackLayout Orientation="Horizontal" Margin="20,0,20,0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                        <Label Text="{Binding Pelicula.VoteAverage}" TextColor="#E9E0CE"
+                                                       FontSize="15" />
+                        <Image Source="estrella.png" HeightRequest="20" WidthRequest="15"/>
+                    </StackLayout>
+                    <Label Text="{Binding Pelicula.ReleaseDate, StringFormat='{0:dd/MM/yyyy}'}" 
+                           HorizontalOptions="EndAndExpand" TextColor="#E9E0CE"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="20,0,20,0">
+                    <Label Text="{Binding Pelicula.Revenue, StringFormat='Ganancias: {0}$'}" 
+                           HorizontalOptions="StartAndExpand"
+                           TextColor="#E9E0CE"/>
+                    <Label Text="{Binding Pelicula.Budget, StringFormat='Coste: {0}$'}" 
+                           HorizontalOptions="EndAndExpand"
+                           TextColor="#E9E0CE"/>
+                </StackLayout>
+                <FlexLayout Direction="Row"
+                            AlignItems="End"
+                            JustifyContent="SpaceBetween"
+                            Wrap="Wrap">
+                    <Label Text="{Binding Pelicula.Overview}" TextColor="#C99DA3" FontSize="15"
+                           Margin="20,0,20,20"/>
+                </FlexLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
