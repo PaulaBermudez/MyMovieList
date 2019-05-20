@@ -7,11 +7,23 @@
 
             <Image Source="{Binding Pelicula.PosterPath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
                                       HeightRequest="300" WidthRequest="250" />
-            <Label Text="{Binding Pelicula.Budget}"
+            <Label Text="{Binding Pelicula.Title}"
                    FontSize="30"
                    TextColor="Black"
                 HorizontalOptions="CenterAndExpand" />
-            <Label Text="Holi"/>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                    <Label Text="{Binding Pelicula.VoteAverage}" TextColor="#E9E0CE"
+                                                   FontSize="15" />
+                    <Image Source="estrella.png" HeightRequest="20" WidthRequest="15"/>
+                </StackLayout>
+                <Label Text="{Binding Pelicula.ReleaseDate, StringFormat='{0:dd/MM/yyyy}'}" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding Pelicula.Revenue, StringFormat='Ganancias: {0}$'}" HorizontalOptions="StartAndExpand"/>
+                <Label Text="{Binding Pelicula.Budget, StringFormat='Coste: {0}$'}" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+            <Label Text="{Binding Pelicula.Overview}" TextColor="Black" FontSize="15"/>            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
