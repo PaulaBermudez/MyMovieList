@@ -37,6 +37,25 @@
                     <Label Text="{Binding Pelicula.Overview}" TextColor="#C99DA3" FontSize="15"
                            Margin="20,0,20,20"/>
                 </FlexLayout>
+                <ListView ItemsSource="{Binding Actores.Cast}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}" TextColor="#E9E0CE"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <ListView ItemsSource="{Binding Imagenes.Backdrops}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Image Source="{Binding FilePath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
+                       Margin="0,20,0,0"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

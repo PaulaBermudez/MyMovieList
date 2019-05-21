@@ -142,6 +142,39 @@ namespace MyMovieList.Repositories
                 return null;
             }
         }
-        
+        public async Task<Credits> RepartoPelicula(int idpelicula)
+        {
+            String peticion = "api/Peliculas/RepartoPelicula/" + idpelicula;
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                String json = await response.Content.ReadAsStringAsync();
+                Credits reparto = JsonConvert.DeserializeObject<Credits>(json);
+                return reparto;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public async Task<ImagesWithId> ImagenesPelicula(int idpelicula)
+        {
+            String peticion = "api/Peliculas/ImagenesPelicula/" + idpelicula;
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                String json = await response.Content.ReadAsStringAsync();
+                ImagesWithId imagenes = JsonConvert.DeserializeObject<ImagesWithId>(json);
+                return imagenes;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
