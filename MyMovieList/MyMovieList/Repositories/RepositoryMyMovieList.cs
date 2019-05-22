@@ -60,6 +60,38 @@ namespace MyMovieList.Repositories
                 }
             }
         }
+        private async Task<T> CallApi<T>(String peticion, String token)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(this.urlapi);
+                client.DefaultRequestHeaders.Accept.Clear();
+                MediaTypeWithQualityHeaderValue headerjson = new MediaTypeWithQualityHeaderValue("application/json");
+                client.DefaultRequestHeaders.Accept.Add(headerjson);
+                if (token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer "
+                      + token);
+                }
+                HttpResponseMessage response = await client.GetAsync(peticion);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    String content = await response.Content.ReadAsStringAsync();
+                    T datos = JsonConvert.DeserializeObject<T>(content);
+                    return (T)Convert.ChangeType(datos, typeof(T));
+                }
+                else
+                {
+                    return default(T);
+                }
+            }
+        }
+        public async Task<Usuario> PerfilUsuario(String token)
+        {
+            Usuario usuario = await this.CallApi<Usuario>("api/Usuarios/PerfilUsuario", token);
+            return usuario;
+        }
         public async Task CrearUsuario(Usuario user)
         {
             String jsonusuario = JsonConvert.SerializeObject(user, Formatting.Indented);

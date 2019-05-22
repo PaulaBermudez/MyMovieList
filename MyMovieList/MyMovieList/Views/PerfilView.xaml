@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MyMovieList.ViewModels"
+             x:Class="MyMovieList.Views.PerfilView">
+    <ContentPage.BindingContext>
+        <viewmodels:UsuarioViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="{Binding Usuario.FotoPerfil}" />
+            <Label Text="{Binding Usuario.NombreUsuario}"/>
+            <Label Text="{Binding Usuario.Email}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
