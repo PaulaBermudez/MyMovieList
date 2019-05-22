@@ -7,13 +7,27 @@
         <viewmodels:UsuarioViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
-            <Label Text="Usuario" HorizontalOptions="CenterAndExpand"/>
-            <Entry Text="{Binding Usuario.NombreUsuario}" HorizontalOptions="FillAndExpand"/>
-            <Label Text="Password" HorizontalOptions="CenterAndExpand"/>
-            <Entry Text="{Binding Usuario.Password}" HorizontalOptions="FillAndExpand"/>
-            <Button Command="{Binding IniciarSesion}" Text="Login" HorizontalOptions="CenterAndExpand"/>
-            <Label Text="{Binding Error}"/>
-        </StackLayout>
+        <Grid>
+            <Image Source="wallpaper.jpg" Aspect="AspectFill"/>
+            <BoxView Color="#2A2B2A" Opacity="0.8"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <BoxView Grid.Row="0" WidthRequest="100" HeightRequest="100" Margin="0,50,0,0" Color="Black" HorizontalOptions="Center"/>
+                <StackLayout Grid.Row="1" Padding="30,20">
+                    <Entry Text="{Binding Usuario.NombreUsuario}" HorizontalOptions="FillAndExpand" Placeholder="Usuario" PlaceholderColor="GhostWhite" TextColor="GhostWhite"/>
+                    <Entry Text="{Binding Usuario.Password}" HorizontalOptions="FillAndExpand" Placeholder="Contraseña" PlaceholderColor="GhostWhite" IsPassword="True" TextColor="GhostWhite"/>
+                    <Button Command="{Binding IniciarSesion}" Text="Login" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A"/>
+                    <Label Text="{Binding Error}" HorizontalOptions="Center" TextColor="GhostWhite"/>
+                </StackLayout>
+                <StackLayout Grid.Row="2" HorizontalOptions="Center" Margin="0,0,0,50">
+                    <Label Text="¿No tienes cuenta?" HorizontalOptions="Center" FontSize="20" TextColor="GhostWhite"/>
+                    <Button Command="{Binding Registro}" Text="Registrarse" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A"/>
+                </StackLayout>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
