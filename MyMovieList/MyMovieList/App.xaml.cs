@@ -23,7 +23,9 @@ namespace MyMovieList
         {
             InitializeComponent();
 
-            MainPage = new Tabbed();
+
+          MainPage = new NavigationPage(new PaginaMaestra()) { BarBackgroundColor = Color.FromHex("#E04ECA") };           
+
         }
 
         protected override void OnStart()

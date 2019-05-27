@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMovieList.Views.PaginaMaestra">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu principal">
+            <StackLayout>
+                <StackLayout BackgroundColor="Blue">
+                <Button Text="My Movie List" 
+                HorizontalOptions="CenterAndExpand"
+                       FontSize="35"
+                        FontFamily="Poppins"
+                        BackgroundColor="Transparent"
+                        x:Name="btnMML">
+                </Button>
+                </StackLayout>
+                <SearchBar Placeholder="Buscar Pelicula"
+                           SearchButtonPressed="SearchBar_SearchButtonPressed"
+                           x:Name="sbBuscar"></SearchBar>
+                <!--<Label Text="My Moview List" 
+                HorizontalOptions="CenterAndExpand"
+                       FontSize="35"
+                       x:Name="lblMML"
+                       />-->
+                <ListView x:Name="lsvmenu">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Titulo}"
+			                                           FontSize="20"
+			                                           TextColor="Black"/>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+
+</MasterDetailPage>
