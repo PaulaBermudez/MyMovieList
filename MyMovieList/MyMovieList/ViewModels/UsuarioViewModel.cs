@@ -2,6 +2,7 @@
 using MyMovieList.Models;
 using MyMovieList.Repositories;
 using MyMovieList.Services;
+using MyMovieList.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,6 +31,39 @@ namespace MyMovieList.ViewModels
                 OnPropertyChanged("Usuario");
             }
         }
+        public Command Registro
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    RegistroView view = new RegistroView();
+                    await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                });
+            }
+        }
+        public Command NuevoUsuario
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    if (this.Usuario.Password == this.Usuario.Password2 && this.Usuario.Email.Contains("@"))
+                    {
+                        await this.repo.CrearUsuario(this.Usuario);
+                        this.Error = "Usuario creado";
+                    }
+                    else if (this.Usuario.Password != this.Usuario.Password2)
+                    {
+                        this.Error = "Las contraseñas no coinciden";
+                    }
+                    else
+                    {
+                        this.Error = "El email no es válido";
+                    }
+                });
+            }
+        }
         public Command IniciarSesion
         {
             get
@@ -45,10 +79,12 @@ namespace MyMovieList.ViewModels
                     {
                         SessionService session = App.Locator.SessionService;
                         session.Token = token;
-                        session.Usuario = Usuario;
-                        this.Error = "Usuario/Password correctos";
-                        //PerfilView view = new PerfilView();
-                        //await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                        session.Usuario = await this.repo.PerfilUsuario(session.Token);
+                        PerfilView view = new PerfilView();
+                        UsuarioViewModel viewmodel = new UsuarioViewModel();
+                        viewmodel.Usuario = session.Usuario;
+                        view.BindingContext = viewmodel;
+                        await Application.Current.MainPage.Navigation.PushModalAsync(view);
                     }
                 });
             }

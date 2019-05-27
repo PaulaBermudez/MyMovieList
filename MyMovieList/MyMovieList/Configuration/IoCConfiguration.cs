@@ -18,6 +18,7 @@ namespace MyMovieList.Configuration
             builder.RegisterType<PeliculasCartelera>();
             builder.RegisterType<PeliculasProximamente>();
             builder.RegisterType<SessionService>();
+            builder.RegisterType<PeliculaViewModel>();
             this.container = builder.Build();
         }
         public SessionService SessionService
@@ -45,6 +46,14 @@ namespace MyMovieList.Configuration
             get
             {
                 return this.container.Resolve<PeliculasProximamente>();
+            }
+        }
+
+        public PeliculaViewModel PeliculaViewModel
+        {
+            get
+            {
+                return this.container.Resolve<PeliculaViewModel>();
             }
         }
     }

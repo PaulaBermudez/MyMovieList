@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TMDbLib.Objects.General;
+using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 
 namespace MyMovieList.Repositories
@@ -60,6 +61,49 @@ namespace MyMovieList.Repositories
                     return null;
                 }
             }
+        }
+        private async Task<T> CallApi<T>(String peticion, String token)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(this.urlapi);
+                client.DefaultRequestHeaders.Accept.Clear();
+                MediaTypeWithQualityHeaderValue headerjson = new MediaTypeWithQualityHeaderValue("application/json");
+                client.DefaultRequestHeaders.Accept.Add(headerjson);
+                if (token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer "
+                      + token);
+                }
+                HttpResponseMessage response = await client.GetAsync(peticion);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    String content = await response.Content.ReadAsStringAsync();
+                    T datos = JsonConvert.DeserializeObject<T>(content);
+                    return (T)Convert.ChangeType(datos, typeof(T));
+                }
+                else
+                {
+                    return default(T);
+                }
+            }
+        }
+        public async Task<Usuario> PerfilUsuario(String token)
+        {
+            Usuario usuario = await this.CallApi<Usuario>("api/Usuarios/PerfilUsuario", token);
+            return usuario;
+        }
+        public async Task CrearUsuario(Usuario user)
+        {
+            String jsonusuario = JsonConvert.SerializeObject(user, Formatting.Indented);
+            byte[] bufferusuario = Encoding.UTF8.GetBytes(jsonusuario);
+            ByteArrayContent content = new ByteArrayContent(bufferusuario);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            String peticion = "api/Usuarios/CrearUsuario";
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.PostAsync(uri, content);
         }
         public async Task<SearchContainer<SearchMovie>> GetPeliculasPopulares()
         {
@@ -150,6 +194,58 @@ namespace MyMovieList.Repositories
                 {
                     return default(T);
                 }
+            }
+        }
+
+        public async Task<Movie> DetallesPelicula(int id)
+        {
+            String peticion = "api/Peliculas/DetallesPelicula/" + id;
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                String json = await response.Content.ReadAsStringAsync();
+                Movie pelicula = JsonConvert.DeserializeObject<Movie>(json);
+                return pelicula;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public async Task<Credits> RepartoPelicula(int idpelicula)
+        {
+            String peticion = "api/Peliculas/RepartoPelicula/" + idpelicula;
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                String json = await response.Content.ReadAsStringAsync();
+                Credits reparto = JsonConvert.DeserializeObject<Credits>(json);
+                return reparto;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public async Task<ImagesWithId> ImagenesPelicula(int idpelicula)
+        {
+            String peticion = "api/Peliculas/ImagenesPelicula/" + idpelicula;
+            Uri uri = new Uri(this.urlapi + peticion);
+            HttpClient client = this.GetHttpClient();
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                String json = await response.Content.ReadAsStringAsync();
+                ImagesWithId imagenes = JsonConvert.DeserializeObject<ImagesWithId>(json);
+                return imagenes;
+            }
+            else
+            {
+                return null;
             }
         }
     }

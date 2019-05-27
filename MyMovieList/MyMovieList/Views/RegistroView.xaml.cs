@@ -10,12 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace MyMovieList.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Tabbed : TabbedPage
+    public partial class RegistroView : ContentPage
     {
-        public Tabbed ()
+        public RegistroView()
         {
             InitializeComponent();
-            BarBackgroundColor = Color.FromHex("#996888");
         }
     }
 }

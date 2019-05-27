@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
-             x:Class="MyMovieList.Views.DetallesPeliculaPopular">
+             x:Class="MyMovieList.Views.DetallesPeliculaProximamente">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#2A2B2A">
@@ -39,12 +39,12 @@
                            Margin="20,0,20,20"/>
                 </FlexLayout>
                 <Label Text="Reparto" HorizontalOptions="Center" TextColor="#8C7291" FontSize="20"/>
-                <ContentView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="250">
+                <ContentView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="200">
                     <control:CarouselView ItemsSource="{Binding Actores.Cast}">
                         <control:CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Orientation="Vertical">
-                                    <Image Source="{Binding ProfilePath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}" HeightRequest="200"/>
+                                    <Image Source="{Binding ProfilePath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}" HeightRequest="150"/>
                                     <Label Text="{Binding Name}" TextColor="#E9E0CE" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </DataTemplate>
@@ -57,8 +57,9 @@
                         <control:CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout>
+
                                     <Image Source="{Binding FilePath, StringFormat='https://image.tmdb.org/t/p/w400/{0}'}"
-                                           Margin="0,20,0,20" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                                           Margin="0,20,0,0"/>
                                 </StackLayout>
                             </DataTemplate>
                         </control:CarouselView.ItemTemplate>
