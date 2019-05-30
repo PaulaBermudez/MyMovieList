@@ -165,37 +165,6 @@ namespace MyMovieList.Repositories
             return resultados;
         }
 
-        private async Task<T> CallApi<T>(String peticion, String token)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(this.urlapi);
-                client.DefaultRequestHeaders.Accept.Clear();
-                MediaTypeWithQualityHeaderValue headerjson = new MediaTypeWithQualityHeaderValue("application/json");
-                client.DefaultRequestHeaders.Accept.Add(headerjson);
-
-                if (token != null)
-                {
-                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
-                }
-
-                HttpResponseMessage response = await client.GetAsync(peticion);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    String content = await response.Content.ReadAsStringAsync();
-                    //DESERIALIZAR LOS DATOS CON JSONCONVERT
-                    T datos = JsonConvert.DeserializeObject<T>(content);
-                    //T datos = await response.Content.ReadAsStringAsync();
-                    return (T)Convert.ChangeType(datos, typeof(T));
-
-                }
-                else
-                {
-                    return default(T);
-                }
-            }
-        }
 
         public async Task<Movie> DetallesPelicula(int id)
         {
