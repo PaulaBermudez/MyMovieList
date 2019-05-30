@@ -13,9 +13,12 @@ namespace MyMovieList.ViewModels
     public class UsuarioViewModel: ViewModelBase
     {
         RepositoryMyMovieList repo;
+        SessionService session;
         public UsuarioViewModel()
         {
             this.repo = new RepositoryMyMovieList();
+            session = App.Locator.SessionService;
+            this.Usuario = session.Usuario;
             if (this.Usuario == null)
             {
                 this.Usuario = new Usuario();
@@ -38,6 +41,20 @@ namespace MyMovieList.ViewModels
                 return new Command(async () =>
                 {
                     RegistroView view = new RegistroView();
+                    await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                });
+            }
+        }
+        public Command EditarUsuario
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    EditarUsuarioView view = new EditarUsuarioView();
+                    UsuarioViewModel viewmodel = new UsuarioViewModel();
+                    viewmodel.Usuario = session.Usuario;
+                    view.BindingContext = viewmodel;
                     await Application.Current.MainPage.Navigation.PushModalAsync(view);
                 });
             }
@@ -77,7 +94,6 @@ namespace MyMovieList.ViewModels
                     }
                     else
                     {
-                        SessionService session = App.Locator.SessionService;
                         session.Token = token;
                         session.Usuario = await this.repo.PerfilUsuario(session.Token);
                         PerfilView view = new PerfilView();

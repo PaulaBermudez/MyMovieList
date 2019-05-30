@@ -56,9 +56,11 @@ namespace MyMovieList.ViewModels
                     Movie peli = await this.repo.DetallesPelicula(movie.Id);
                     Credits actores = await this.repo.RepartoPelicula(movie.Id);
                     ImagesWithId imagenes = await this.repo.ImagenesPelicula(movie.Id);
+                    List<Genre> generos = peli.Genres;
                     viewmodel.Pelicula = peli as Movie;
                     viewmodel.Actores = actores as Credits;
                     viewmodel.Imagenes = imagenes as ImagesWithId;
+                    viewmodel.Generos = generos as List<Genre>;
                     view.BindingContext = viewmodel;
                     await Application.Current.MainPage.Navigation.PushModalAsync(view);
 
