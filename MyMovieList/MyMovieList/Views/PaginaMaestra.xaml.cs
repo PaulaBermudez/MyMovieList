@@ -50,13 +50,12 @@ namespace MyMovieList.Views
             IsPresented = false;
         }
 
-        private async void  SearchBar_SearchButtonPressed(object sender, EventArgs e)
+        private void  SearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
             String Parametro = this.sbBuscar.Text;
 
             ListasView listasView = new ListasView();
-            ListasViewModel listasViewmodel = new ListasViewModel();
-             await listasViewmodel.Busqueda(Parametro);
+            ListasViewModel listasViewmodel = new ListasViewModel(Parametro);
             listasView.BindingContext = listasViewmodel;
             Detail = new NavigationPage(listasView);
 

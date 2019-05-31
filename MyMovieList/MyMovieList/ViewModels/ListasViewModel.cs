@@ -28,6 +28,14 @@ namespace MyMovieList.ViewModels
             });
         }
 
+        public ListasViewModel(String s)
+        {
+            this.repo = new RepositoryMyMovieList();
+            Task.Run(async () => {
+                await this.Busqueda(s);
+            });
+        }
+
         private async Task CargarListas()
         {
             SearchContainer<SearchMovie> lista = await this.repo.GetPeliculasPopulares();

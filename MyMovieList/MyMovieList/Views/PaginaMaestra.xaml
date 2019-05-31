@@ -8,7 +8,7 @@
     <MasterDetailPage.Master>
         <ContentPage Title="Menu principal">
             <StackLayout>
-                <StackLayout BackgroundColor="Blue">
+                <StackLayout BackgroundColor="#996888">
                     <Button Text="My Movie List" 
                 HorizontalOptions="CenterAndExpand"
                        FontSize="35"
@@ -29,7 +29,6 @@
                                 <Label Text="{Binding Titulo}"
 			                                           FontSize="20"
 			                                           TextColor="Black"/>
-
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
