@@ -165,7 +165,6 @@ namespace MyMovieList.Repositories
             return resultados;
         }
 
-
         public async Task<Movie> DetallesPelicula(int id)
         {
             String peticion = "api/Peliculas/DetallesPelicula/" + id;

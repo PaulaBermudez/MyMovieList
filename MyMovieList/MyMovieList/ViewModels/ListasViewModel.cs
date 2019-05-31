@@ -12,6 +12,7 @@ using System.Linq;
 using Xamarin.Forms;
 using MyMovieList.Views;
 using TMDbLib.Objects.Movies;
+using System.Windows.Input;
 
 namespace MyMovieList.ViewModels
 {
@@ -27,9 +28,23 @@ namespace MyMovieList.ViewModels
             });
         }
 
+        public ListasViewModel(String s)
+        {
+            this.repo = new RepositoryMyMovieList();
+            Task.Run(async () => {
+                await this.Busqueda(s);
+            });
+        }
+
         private async Task CargarListas()
         {
             SearchContainer<SearchMovie> lista = await this.repo.GetPeliculasPopulares();
+            this.Listas = new ObservableCollection<SearchMovie>(lista.Results);
+        }
+
+        public async Task Busqueda(String text)
+        {
+            SearchContainer<SearchMovie> lista = await this.repo.BuscarPeliculas(text);
             this.Listas = new ObservableCollection<SearchMovie>(lista.Results);
         }
 
@@ -67,5 +82,22 @@ namespace MyMovieList.ViewModels
                 });
             }
         }
+
+        //private ICommand _searchCommand;
+        //public ICommand SearchCommand
+        //{
+        //    get
+        //    {
+        //        return _searchCommand ?? (_searchCommand = new Command<string>(async (text) =>
+        //        {
+        //            ListasView listasView = new ListasView();
+        //            ListasViewModel listasViewmodel = new ListasViewModel();
+        //            SearchContainer<SearchMovie> lista = await this.repo.BuscarPeliculas(text);
+        //            listasViewmodel.Listas = new ObservableCollection<SearchMovie>(lista.Results);
+        //            listasView.BindingContext = listasViewmodel;
+        //            await Application.Current.MainPage.Navigation.PushModalAsync(listasView);
+        //        }));
+        //    }
+        //}
     }
 }
