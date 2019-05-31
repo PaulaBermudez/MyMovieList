@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMovieList.Views.EditarUsuarioView">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#2A2B2A">
+            <Image Source="defecto.jpg" WidthRequest="150" HeightRequest="150" Margin="0,30,0,0"/>
+            <Frame CornerRadius="10" Margin="5" Padding="10" IsClippedToBounds="True" BorderColor="GhostWhite" BackgroundColor="#2A2B2A">
+                <StackLayout BackgroundColor="#2A2B2A">
+                    <Label Text="Usuario" TextColor="GhostWhite"/>
+                    <Entry Text="{Binding Usuario.NombreUsuario}" IsEnabled="False" TextColor="GhostWhite"/>
+                    <Label Text="Email" TextColor="GhostWhite"/>
+                    <Entry Text="{Binding Usuario.Email}" TextColor="GhostWhite"/>
+                    <Label Text="Contraseña" TextColor="GhostWhite"/>
+                    <Entry Text="{Binding Usuario.Password}" TextColor="GhostWhite" IsPassword="True"/>
+                    <Label Text="Confirmar contraseña" TextColor="GhostWhite"/>
+                    <Entry Text="{Binding Usuario.Password2, Mode=OneWay}" TextColor="GhostWhite" IsPassword="True"/>
+                    <Button Text="Confirmar cambios" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A" Margin="10,10,10,0" Command=""/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

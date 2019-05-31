@@ -2,15 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:MyMovieList.ViewModels"
+             xmlns:local="clr-namespace:MyMovieList"
+             BindingContext="{Binding Source={x:Static local:App.Locator}, Path=UsuarioViewModel}"
              x:Class="MyMovieList.Views.PerfilView">
-    <ContentPage.BindingContext>
-        <viewmodels:UsuarioViewModel/>
-    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Image Source="{Binding Usuario.FotoPerfil}" />
-            <Label Text="{Binding Usuario.NombreUsuario}"/>
-            <Label Text="{Binding Usuario.Email}"/>
+        <StackLayout BackgroundColor="#2A2B2A" x:Name="stackperfil">
+            <Image Source="defecto.jpg" WidthRequest="150" HeightRequest="150" Margin="0,30,0,0" />
+            <Label Text="{Binding Usuario.NombreUsuario}" HorizontalOptions="CenterAndExpand" TextColor="GhostWhite" FontSize="30"/>
+            <Label Text="{Binding Usuario.Email}" HorizontalOptions="CenterAndExpand" TextColor="GhostWhite" FontSize="20"/>
+            <Label Text="********" HorizontalOptions="CenterAndExpand" TextColor="GhostWhite" FontSize="30"/>
+            <Button Text="Editar usuario" Command="{Binding EditarUsuario}" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A" Margin="10,10,10,0"/>
+            <Frame Margin="20,20,20,20" OutlineColor="Red" VerticalOptions="FillAndExpand">
+                <BoxView/>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

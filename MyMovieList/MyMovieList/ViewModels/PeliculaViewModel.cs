@@ -28,15 +28,7 @@ namespace MyMovieList.ViewModels
             {
                 Imagenes = new ImagesWithId();
             }
-            //Task.Run(async () => {
-            //    await this.CargarPelicula();
-            //});
         }
-        //private async Task CargarPelicula()
-        //{
-        //    Movie pelicula = await this.repo.DetallesPelicula(this.Pelicula.Id);
-        //    this.Pelicula = pelicula;
-        //}
         private Movie _Pelicula;
         public Movie Pelicula
         {
@@ -74,6 +66,19 @@ namespace MyMovieList.ViewModels
             {
                 this._Imagenes = value;
                 OnPropertyChanged("Imagenes");
+            }
+        }
+        private List<Genre> _Generos;
+        public List<Genre> Generos
+        {
+            get
+            {
+                return this._Generos;
+            }
+            set
+            {
+                this._Generos = value;
+                OnPropertyChanged("Generos");
             }
         }
     }

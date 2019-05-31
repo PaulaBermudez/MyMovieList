@@ -64,6 +64,15 @@
                         </control:CarouselView.ItemTemplate>
                     </control:CarouselView>
                 </ContentView>
+                <ListView ItemsSource="{Binding Generos}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}" TextColor="#E9E0CE"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

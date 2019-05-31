@@ -7,9 +7,7 @@
         <viewmodels:UsuarioViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <Grid>
-            <Image Source="wallpaper.jpg" Aspect="AspectFill"/>
-            <BoxView Color="#2A2B2A" Opacity="0.8"/>
+        <Grid BackgroundColor="#2A2B2A">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
