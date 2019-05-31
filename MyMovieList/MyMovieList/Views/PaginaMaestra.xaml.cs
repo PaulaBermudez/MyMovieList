@@ -1,6 +1,8 @@
 ﻿using MyMovieList.Models;
+using MyMovieList.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +19,7 @@ namespace MyMovieList.Views
         public PaginaMaestra()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
 
             MiMenu = new List<PaginaMenu>();
             PaginaMenu pag1 = new PaginaMenu() { Titulo = "Perfil", Pagina = typeof(LoginView) };
@@ -31,10 +34,10 @@ namespace MyMovieList.Views
 
         private void BtnMML_Clicked(object sender, EventArgs e)
         {
-            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(ListasView)));
+            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Tabbed)));
 
             IsPresented = false;
-            this.lsvmenu.SelectedItem = 0;
+            
 
         }
 
@@ -47,9 +50,19 @@ namespace MyMovieList.Views
             IsPresented = false;
         }
 
-        private void SearchBar_SearchButtonPressed(object sender, EventArgs e)
+        private async void  SearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
             String Parametro = this.sbBuscar.Text;
+
+            ListasView listasView = new ListasView();
+            ListasViewModel listasViewmodel = new ListasViewModel();
+             await listasViewmodel.Busqueda(Parametro);
+            listasView.BindingContext = listasViewmodel;
+            Detail = new NavigationPage(listasView);
+
+            IsPresented = false;
+
+            //await Application.Current.MainPage.Navigation.PushModalAsync(listasView);
         }
     }
 }
