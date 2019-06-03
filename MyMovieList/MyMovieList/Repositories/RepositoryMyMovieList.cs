@@ -89,6 +89,12 @@ namespace MyMovieList.Repositories
                 }
             }
         }
+        public async Task<List<Usuario>> GetUsuarios(String token)
+        {
+            List<Usuario> usuarios = await this.CallApi<List<Usuario>>("api/Usuarios/GetUsuarios/", token);
+            return usuarios;
+        }
+
         public async Task<Usuario> PerfilUsuario(String token)
         {
             Usuario usuario = await this.CallApi<Usuario>("api/Usuarios/PerfilUsuario", token);
