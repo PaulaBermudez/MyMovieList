@@ -1,4 +1,5 @@
 ﻿using MyMovieList.Models;
+using MyMovieList.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -104,6 +105,29 @@ namespace MyMovieList.Repositories
             Uri uri = new Uri(this.urlapi + peticion);
             HttpClient client = this.GetHttpClient();
             HttpResponseMessage response = await client.PostAsync(uri, content);
+        }
+        public async Task EditarUsuario(Usuario user)
+        {
+            using (HttpClient client = this.GetHttpClient())
+            {
+                SessionService session = App.Locator.SessionService;
+                String peticion = "api/Usuarios/EditarUsuario";
+                client.BaseAddress = new Uri(this.urlapi);
+                if (session.Token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer "
+                        + session.Token);
+                }
+                Usuario usuario = new Usuario();
+                usuario.IdUsuario = user.IdUsuario;
+                usuario.NombreUsuario = user.NombreUsuario;
+                usuario.Email = user.Email;
+                usuario.Password = user.Password;
+                usuario.Password2 = user.Password2;
+                String json = JsonConvert.SerializeObject(usuario);
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                await client.PutAsync(peticion, content);
+            }
         }
         public async Task<SearchContainer<SearchMovie>> GetPeliculasPopulares()
         {
