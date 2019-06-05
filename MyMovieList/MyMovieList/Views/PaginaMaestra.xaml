@@ -9,13 +9,14 @@
         <ContentPage Title="Menu principal">
             <StackLayout>
                 <StackLayout BackgroundColor="#996888">
-                    <Button Text="My Movie List" 
+                    <!--<Button Text="My Movie List" 
                 HorizontalOptions="CenterAndExpand"
                        FontSize="35"
                         FontFamily="Poppins"
                         BackgroundColor="Transparent"
                         x:Name="btnMML">
-                    </Button>
+                    </Button>-->
+                    <Image Source="logo.png" HeightRequest="150" WidthRequest="150"/>
                 </StackLayout>
                 <!--SearchCommand="{Binding SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"-->
                 <SearchBar Placeholder="Buscar Pelicula"                     
@@ -26,9 +27,10 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Label Text="{Binding Titulo}"
-			                                           FontSize="20"
-			                                           TextColor="Black"/>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Image Source="{Binding Icono}" HeightRequest="25" WidthRequest="25"/>
+                                    <Label Text="{Binding Titulo}" FontSize="20" TextColor="#996888" VerticalOptions="Center"/>
+                                </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

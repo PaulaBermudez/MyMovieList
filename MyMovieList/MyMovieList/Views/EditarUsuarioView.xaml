@@ -12,9 +12,9 @@
                     <Label Text="Email" TextColor="GhostWhite"/>
                     <Entry Text="{Binding Usuario.Email}" TextColor="GhostWhite"/>
                     <Label Text="Contraseña" TextColor="GhostWhite"/>
-                    <Entry Text="{Binding Usuario.Password}" TextColor="GhostWhite" IsPassword="True"/>
+                    <Entry Text="{Binding Usuario.Password, Mode=OneWayToSource}" TextColor="GhostWhite" IsPassword="True"/>
                     <Label Text="Confirmar contraseña" TextColor="GhostWhite"/>
-                    <Entry Text="{Binding Usuario.Password2, Mode=OneWay}" TextColor="GhostWhite" IsPassword="True"/>
+                    <Entry Text="{Binding Usuario.Password2, Mode=OneWayToSource}" TextColor="GhostWhite" IsPassword="True"/>
                     <Button Text="Confirmar cambios" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A" Margin="10,10,10,0" Command="{Binding ValidarEdicion}"/>
                     <Label Text="{Binding Error}" TextColor="GhostWhite" FontSize="20" HorizontalOptions="Center"/>
                 </StackLayout>

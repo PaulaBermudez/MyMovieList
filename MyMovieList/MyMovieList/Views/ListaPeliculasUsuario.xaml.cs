@@ -1,5 +1,4 @@
 ﻿using MyMovieList.Services;
-using MyMovieList.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,13 @@ using Xamarin.Forms.Xaml;
 namespace MyMovieList.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PerfilView : ContentPage
+	public partial class ListaPeliculasUsuario : ContentPage
 	{
-		public PerfilView ()
+		public ListaPeliculasUsuario ()
 		{
 			InitializeComponent ();
             SessionService session = App.Locator.SessionService;
             this.lstPelis.ItemsSource = session.ListaPeliculas;
-		}
+        }
 	}
 }

@@ -156,7 +156,24 @@ namespace MyMovieList.Repositories
                 await client.PutAsync(peticion, content);
             }
         }
-
+        public async Task<String> GetListaUser(String token)
+        {
+            String lista = await
+                this.CallApi<String>("api/Usuarios/ListaUsuario", token);
+            return lista;
+        }
+        public async Task<Lista> GetListaUser2(String token)
+        {
+            Lista lista = await
+                this.CallApi<Lista>("api/Usuarios/ListaUser", token);
+            return lista;
+        }
+        public async Task<List<String>> ListaUsuario(String token)
+        {
+            List<String> lista = await
+                this.CallApi<List<String>>("api/Usuarios/PeliculasUsuario", token);
+            return lista;
+        }
         public async Task<SearchContainer<SearchMovie>> GetPeliculasPopulares()
         {
             String peticion = "api/Peliculas/PeliculasPopulares";

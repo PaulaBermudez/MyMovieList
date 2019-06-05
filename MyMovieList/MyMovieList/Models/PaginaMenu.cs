@@ -8,6 +8,6 @@ namespace MyMovieList.Models
     {
         public String Titulo { get; set; }
         public Type Pagina { get; set; }
-
+        public String Icono { get; set; }
     }
 }
