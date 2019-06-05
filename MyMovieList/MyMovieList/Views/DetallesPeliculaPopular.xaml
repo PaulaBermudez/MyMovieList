@@ -38,6 +38,8 @@
                     <Label Text="{Binding Pelicula.Overview}" TextColor="#C99DA3" FontSize="15"
                            Margin="20,0,20,20"/>
                 </FlexLayout>
+                <Button x:Name="botonañadir" Command="{Binding AñadirPelicula}" Text="Añadir a la lista" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A"/>
+                <Button x:Name="botoneliminar" Command="{Binding EliminarPelicula}" Text="Eliminar de la lista" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A"/>
                 <Label Text="Reparto" HorizontalOptions="Center" TextColor="#8C7291" FontSize="20"/>
                 <ContentView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="250">
                     <control:CarouselView ItemsSource="{Binding Actores.Cast}">

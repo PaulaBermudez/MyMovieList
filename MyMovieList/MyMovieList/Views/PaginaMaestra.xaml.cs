@@ -13,9 +13,9 @@ using Xamarin.Forms.Xaml;
 
 namespace MyMovieList.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PaginaMaestra : MasterDetailPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PaginaMaestra : MasterDetailPage
+    {
         public List<PaginaMenu> MiMenu { get; set; }
         SessionService session;
         public PaginaMaestra()
@@ -44,16 +44,17 @@ namespace MyMovieList.Views
                 var page1 = new PaginaMenu()
                 {
                     Titulo = "Login",
-                    Icono="Login.png",
+                    Icono = "Login.png",
                     Pagina = typeof(LoginView)
                 };
                 this.MiMenu.Add(page1);
             }
-            else
+            else if(session.Usuario.NombreUsuario == "admin")
             {
                 var perfil = new PaginaMenu()
                 {
-                    Titulo = "Perfil",                    
+                    Titulo = "Perfil",
+                    Icono = "Perfil.png",
                     Pagina = typeof(PerfilView)
                 };
                 this.MiMenu.Add(perfil);
@@ -61,6 +62,39 @@ namespace MyMovieList.Views
                 var lista = new PaginaMenu()
                 {
                     Titulo = "Mi lista",
+                    Icono = "Lista.png",
+                    Pagina = typeof(ListaPeliculasUsuario)
+                };
+                this.MiMenu.Add(lista);
+                var listausuarios = new PaginaMenu()
+                {
+                    Titulo = "Administración",
+                    Icono = "Usuarios.png",
+                    Pagina = typeof(ListaUsuario)
+                };
+                this.MiMenu.Add(listausuarios);
+                var logout = new PaginaMenu()
+                {
+                    Titulo = "Logout",
+                    Icono = "Logout.png",
+                    Pagina = typeof(Tabbed)
+                };
+                this.MiMenu.Add(logout);
+            }
+            else
+            {
+                var perfil = new PaginaMenu()
+                {
+                    Titulo = "Perfil",
+                    Icono = "Perfil.png",
+                    Pagina = typeof(PerfilView)
+                };
+                this.MiMenu.Add(perfil);
+
+                var lista = new PaginaMenu()
+                {
+                    Titulo = "Mi lista",
+                    Icono = "Lista.png",
                     Pagina = typeof(ListaPeliculasUsuario)
                 };
                 this.MiMenu.Add(lista);
@@ -68,10 +102,9 @@ namespace MyMovieList.Views
                 var logout = new PaginaMenu()
                 {
                     Titulo = "Logout",
+                    Icono = "Logout.png",
                     Pagina = typeof(Tabbed)
                 };
-                PaginaMenu pag2 = new PaginaMenu() { Titulo = "Lista Usuarios", Pagina = typeof(ListaUsuario) };
-                MiMenu.Add(pag2);
                 this.MiMenu.Add(logout);
             }
             this.lsvmenu.ItemsSource = this.MiMenu;
@@ -100,7 +133,7 @@ namespace MyMovieList.Views
             }
         }
 
-        private void  SearchBar_SearchButtonPressed(object sender, EventArgs e)
+        private void SearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
             String Parametro = this.sbBuscar.Text;
 

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
+using System.Linq;
 
 namespace MyMovieList.Repositories
 {
@@ -233,7 +234,67 @@ namespace MyMovieList.Repositories
             SearchContainer<SearchMovie> resultados = await this.CallApi<SearchContainer<SearchMovie>>("api/Peliculas/" + busqueda, null);
             return resultados;
         }
-
+        public async Task AñadirPelicula(int idpelicula, String token)
+        {
+            string lista = await this.GetListaUser(token);
+            using (HttpClient client = new HttpClient())
+            {
+                String peticion = "api/Usuarios/AñadirPelicula/" + idpelicula;
+                client.BaseAddress = new Uri(this.urlapi);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(headerjson);
+                if (token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer "
+                        + token);
+                }
+                Lista listauser = new Lista();
+                listauser.Peliculas = lista + "," + idpelicula.ToString();
+                String json = JsonConvert.SerializeObject(listauser);
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, headerjson.ToString());
+                await client.PutAsync(peticion, content);
+            }
+        }
+        public async Task EliminarPelicula(int idpelicula, String token)
+        {
+            string lista = await this.GetListaUser(token);
+            using (HttpClient client = new HttpClient())
+            {
+                String peticion = "api/Usuarios/EliminarPelicula/" + idpelicula;
+                client.BaseAddress = new Uri(this.urlapi);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(headerjson);
+                if (token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer "
+                        + token);
+                }
+                Lista listauser = await this.GetListaUser2(token);
+                if (lista == "")
+                {
+                    lista = "";
+                }
+                else if (listauser.Peliculas.IndexOf(',') != -1)
+                {
+                    if (listauser.Peliculas.Split(',').Last() == idpelicula.ToString())
+                    {
+                        lista = lista.Replace("," + idpelicula.ToString(), "");
+                    }
+                    else
+                    {
+                        lista = lista.Replace(idpelicula.ToString() + ",", "");
+                    }
+                }
+                else
+                {
+                    lista = "";
+                }
+                listauser.Peliculas = lista;
+                String json = JsonConvert.SerializeObject(listauser);
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, headerjson.ToString());
+                await client.PutAsync(peticion, content);
+            }
+        }
         public async Task<Movie> DetallesPelicula(int id)
         {
             String peticion = "api/Peliculas/DetallesPelicula/" + id;

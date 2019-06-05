@@ -1,21 +1,24 @@
 ﻿using MyMovieList.Base;
 using MyMovieList.Repositories;
+using MyMovieList.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
+using Xamarin.Forms;
 
 namespace MyMovieList.ViewModels
 {
     public class PeliculaViewModel : ViewModelBase
     {
         RepositoryMyMovieList repo;
-
+        SessionService session;
         public PeliculaViewModel()
         {
             this.repo = new RepositoryMyMovieList();
+            session = App.Locator.SessionService;
             if (Pelicula == null)
             {
                 Pelicula = new Movie();
@@ -27,6 +30,32 @@ namespace MyMovieList.ViewModels
             if (Imagenes == null)
             {
                 Imagenes = new ImagesWithId();
+            }
+        }
+        public Command AñadirPelicula
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                        session.ListaPeliculas.Add(this.Pelicula);
+                        await this.repo.AñadirPelicula(this.Pelicula.Id, session.Token);
+                        MessagingCenter.Send<UsuarioViewModel>
+                        (App.Locator.UsuarioViewModel, "UPDATE");
+                });
+            }
+        }
+        public Command EliminarPelicula
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                        await this.repo.EliminarPelicula(this.Pelicula.Id, session.Token);
+                        MessagingCenter.Send<UsuarioViewModel>
+                        (App.Locator.UsuarioViewModel, "UPDATE");
+                        session.ListaPeliculas.Remove(this.Pelicula);                
+                });
             }
         }
         private Movie _Pelicula;

@@ -14,7 +14,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <BoxView Grid.Row="0" WidthRequest="100" HeightRequest="100" Margin="0,50,0,0" Color="Black" HorizontalOptions="Center"/>
+                <Image Source="logo.png" Grid.Row="0" HorizontalOptions="Center" Margin="0,50,0,0"/>
                 <StackLayout Grid.Row="1" Padding="30,20">
                     <Entry Text="{Binding Usuario.NombreUsuario}" HorizontalOptions="FillAndExpand" Placeholder="Usuario" PlaceholderColor="GhostWhite" TextColor="GhostWhite"/>
                     <Entry Text="{Binding Usuario.Email}" HorizontalOptions="FillAndExpand" Placeholder="Email" PlaceholderColor="GhostWhite" TextColor="GhostWhite"/>
@@ -22,7 +22,7 @@
                     <Entry Text="{Binding Usuario.Password2}" HorizontalOptions="FillAndExpand" Placeholder="Confirmar contraseña" PlaceholderColor="GhostWhite" IsPassword="True" TextColor="GhostWhite"/>
                     <Label Text="{Binding Error}" HorizontalOptions="Center" TextColor="GhostWhite"/>
                 </StackLayout>
-                <StackLayout Grid.Row="2" HorizontalOptions="Center" Margin="0,0,0,100">
+                <StackLayout Grid.Row="2" HorizontalOptions="Center" Margin="0,0,0,50">
                     <Label Text="Al registrarte aceptas los términos y condiciones" TextColor="GhostWhite"/>
                     <Button Command="{Binding NuevoUsuario}" Text="Registrarse" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A"/>
                 </StackLayout>
