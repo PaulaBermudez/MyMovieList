@@ -22,7 +22,9 @@ namespace MyMovieList.Views
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+
             this.Paginas();
+
             this.lsvmenu.ItemSelected += Lsvmenu_ItemSelected;
             //this.btnMML.Clicked += BtnMML_Clicked;
         }
@@ -68,6 +70,8 @@ namespace MyMovieList.Views
                     Titulo = "Logout",
                     Pagina = typeof(Tabbed)
                 };
+                PaginaMenu pag2 = new PaginaMenu() { Titulo = "Lista Usuarios", Pagina = typeof(ListaUsuario) };
+                MiMenu.Add(pag2);
                 this.MiMenu.Add(logout);
             }
             this.lsvmenu.ItemsSource = this.MiMenu;
@@ -85,7 +89,6 @@ namespace MyMovieList.Views
         private void Lsvmenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             PaginaMenu pagina = e.SelectedItem as PaginaMenu;
-
             Detail = new NavigationPage((Page)Activator.CreateInstance(pagina.Pagina));
             IsPresented = false;
             if (pagina.Titulo == "Logout")
@@ -107,8 +110,6 @@ namespace MyMovieList.Views
             Detail = new NavigationPage(listasView);
 
             IsPresented = false;
-
-            //await Application.Current.MainPage.Navigation.PushModalAsync(listasView);
         }
     }
 }

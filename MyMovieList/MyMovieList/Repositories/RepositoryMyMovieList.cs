@@ -90,6 +90,12 @@ namespace MyMovieList.Repositories
                 }
             }
         }
+        public async Task<List<Usuario>> GetUsuarios(String token)
+        {
+            List<Usuario> usuarios = await this.CallApi<List<Usuario>>("api/Usuarios/GetUsuarios/", token);
+            return usuarios;
+        }
+
         public async Task<Usuario> PerfilUsuario(String token)
         {
             Usuario usuario = await this.CallApi<Usuario>("api/Usuarios/PerfilUsuario", token);
@@ -106,6 +112,27 @@ namespace MyMovieList.Repositories
             HttpClient client = this.GetHttpClient();
             HttpResponseMessage response = await client.PostAsync(uri, content);
         }
+
+
+        public async Task EliminarUsuario(String username, String token)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                String peticion = "api/Usuarios/EliminarUsuario/" + username;
+                client.BaseAddress = new Uri(this.urlapi);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(headerjson);
+                if (token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer "
+                        + token);
+                }
+                await client.DeleteAsync(peticion);
+            }
+        }
+
+
+
         public async Task EditarUsuario(Usuario user)
         {
             using (HttpClient client = this.GetHttpClient())
