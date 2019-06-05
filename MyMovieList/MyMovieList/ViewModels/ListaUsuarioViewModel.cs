@@ -4,8 +4,10 @@ using MyMovieList.Repositories;
 using MyMovieList.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace MyMovieList.ViewModels
 {
@@ -28,17 +30,32 @@ namespace MyMovieList.ViewModels
 
         private async Task CargarListas(String token)
         {
-            this.Usuarios = await this.repo.GetUsuarios(token);
+            List<Usuario> lista = await this.repo.GetUsuarios(token);
+            this.Usuarios = new ObservableCollection<Usuario>(lista);
         }
 
-        private List<Usuario> _Usuarios;
-        public List<Usuario> Usuarios
+        private ObservableCollection<Usuario> _Usuarios;
+        public ObservableCollection<Usuario> Usuarios
         {
             get { return this._Usuarios; }
             set
             {
                 this._Usuarios = value;
-                OnPropertyChanged("LUsuario");
+                OnPropertyChanged("Usuarios");
+            }
+        }
+
+
+        public Command EliminarUsuario
+        {
+            get
+            {
+                return new Command(async (user) =>
+                {
+                    Usuario usuario = user as Usuario;
+                    await this.repo.EliminarUsuario(usuario.NombreUsuario, session.Token);
+                    await this.CargarListas(session.Token);
+                });
             }
         }
     }

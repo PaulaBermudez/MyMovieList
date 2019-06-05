@@ -111,6 +111,25 @@ namespace MyMovieList.Repositories
             HttpClient client = this.GetHttpClient();
             HttpResponseMessage response = await client.PostAsync(uri, content);
         }
+
+        public async Task EliminarUsuario(String username, String token)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                String peticion = "api/Usuarios/EliminarUsuario/" + username;
+                client.BaseAddress = new Uri(this.urlapi);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(headerjson);
+                if (token != null)
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer "
+                        + token);
+                }
+                await client.DeleteAsync(peticion);
+            }
+        }
+
+
         public async Task<SearchContainer<SearchMovie>> GetPeliculasPopulares()
         {
             String peticion = "api/Peliculas/PeliculasPopulares";

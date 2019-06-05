@@ -20,11 +20,19 @@ namespace MyMovieList.Configuration
             builder.RegisterType<SessionService>().SingleInstance();
             builder.RegisterType<PeliculaViewModel>();
             builder.RegisterType<UsuarioViewModel>();
+            builder.RegisterType<ListaUsuarioViewModel>();
             this.container = builder.Build();
         }
         public SessionService SessionService
         {
             get { return this.container.Resolve<SessionService>(); }
+        }
+        public ListaUsuarioViewModel ListaUsuarioViewModel
+        {
+            get
+            {
+                return this.container.Resolve<ListaUsuarioViewModel>();
+            }
         }
         public ListasViewModel ListasViewModel
         {

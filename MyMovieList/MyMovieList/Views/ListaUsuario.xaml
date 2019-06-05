@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMovieList.Views.ListaUsuario"
+             x:Name="ListaUsuarios"
+             xmlns:local="clr-namespace:MyMovieList"
+             BindingContext="{Binding Source={x:Static local:App.Locator}, Path=ListaUsuarioViewModel}">
+
+    <ContentPage.Content>
+        <StackLayout  BackgroundColor="#2A2B2A">
+            <ListView ItemsSource="{Binding Usuarios, Mode=TwoWay}" HasUnevenRows="True" RowHeight="100"
+                      ItemSelected="ListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding FotoPerfil}" 
+                                   HeightRequest="50" WidthRequest="100" Margin="15,0,15,0"/>
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding NombreUsuario}" TextColor="White"
+                                       FontSize="15"/>
+                                    <Label Text="{Binding Email}" TextColor="White"
+                                       FontSize="15"/>
+                                </StackLayout>
+                                <Image Source="eliminar.png" HorizontalOptions="EndAndExpand"
+                                       WidthRequest="30" HeightRequest="35" Margin="0,0,15,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding .}"
+                                        Command="{Binding BindingContext.EliminarUsuario, Source={x:Reference ListaUsuarios}}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
