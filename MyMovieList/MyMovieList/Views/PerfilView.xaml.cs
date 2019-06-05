@@ -18,7 +18,15 @@ namespace MyMovieList.Views
 		{
 			InitializeComponent ();
             SessionService session = App.Locator.SessionService;
-            this.lstPelis.ItemsSource = session.ListaPeliculas;
+            if(session.ListaPeliculas.First() == null)
+            {
+                
+            }
+            else
+            {
+                this.lstPelis.ItemsSource = session.ListaPeliculas;
+            }
+            
 		}
 	}
 }

@@ -70,7 +70,7 @@ namespace MyMovieList.ViewModels
                     viewmodel.Generos = generos as List<Genre>;
                     view.BindingContext = viewmodel;
                     await Application.Current.MainPage.Navigation.PushModalAsync(view);
-
+                    
                 });
             }
         }
@@ -82,6 +82,11 @@ namespace MyMovieList.ViewModels
                 {
                     ListaPeliculasUsuario view = new ListaPeliculasUsuario();
                     await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                    MessagingCenter.Subscribe<UsuarioViewModel>
+                    (this, "UPDATE", async (sender) =>
+                    {
+                        await this.GetListaPeliculas();
+                    });
                 });
             }
         }
@@ -175,7 +180,8 @@ namespace MyMovieList.ViewModels
                     if (this.Usuario.Password == this.Usuario.Password2 && this.Usuario.Email.Contains("@"))
                     {
                         await this.repo.CrearUsuario(this.Usuario);
-                        this.Error = "Usuario creado";
+                        PaginaMaestra view = new PaginaMaestra();
+                        await Application.Current.MainPage.Navigation.PushModalAsync(view);
                     }
                     else if (this.Usuario.Password != this.Usuario.Password2)
                     {

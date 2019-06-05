@@ -77,8 +77,7 @@ namespace MyMovieList.ViewModels
                     viewmodel.Imagenes = imagenes as ImagesWithId;
                     viewmodel.Generos = generos as List<Genre>;
                     view.BindingContext = viewmodel;
-                    await Application.Current.MainPage.Navigation.PushModalAsync(view);
-
+                    await Application.Current.MainPage.Navigation.PushModalAsync(view);                   
                 });
             }
         }
