@@ -25,6 +25,9 @@ namespace MyMovieList.Views
             PaginaMenu pag1 = new PaginaMenu() { Titulo = "Perfil", Pagina = typeof(LoginView) };
             MiMenu.Add(pag1);
 
+            PaginaMenu pag2 = new PaginaMenu() { Titulo = "Lista Usuarios", Pagina = typeof(ListaUsuario) };
+            MiMenu.Add(pag2);
+
             this.lsvmenu.ItemsSource = MiMenu;
             Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Tabbed)));
 
@@ -35,18 +38,13 @@ namespace MyMovieList.Views
         private void BtnMML_Clicked(object sender, EventArgs e)
         {
             Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Tabbed)));
-
             IsPresented = false;
-            
-
         }
 
         private void Lsvmenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             PaginaMenu pagina = e.SelectedItem as PaginaMenu;
-
             Detail = new NavigationPage((Page)Activator.CreateInstance(pagina.Pagina));
-
             IsPresented = false;
         }
 
@@ -60,8 +58,6 @@ namespace MyMovieList.Views
             Detail = new NavigationPage(listasView);
 
             IsPresented = false;
-
-            //await Application.Current.MainPage.Navigation.PushModalAsync(listasView);
         }
     }
 }
