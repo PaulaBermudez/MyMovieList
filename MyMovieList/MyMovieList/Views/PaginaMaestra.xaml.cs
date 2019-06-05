@@ -1,4 +1,5 @@
 ﻿using MyMovieList.Models;
+using MyMovieList.Services;
 using MyMovieList.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,38 +17,84 @@ namespace MyMovieList.Views
 	public partial class PaginaMaestra : MasterDetailPage
 	{
         public List<PaginaMenu> MiMenu { get; set; }
+        SessionService session;
         public PaginaMaestra()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-
-            MiMenu = new List<PaginaMenu>();
-            PaginaMenu pag1 = new PaginaMenu() { Titulo = "Perfil", Pagina = typeof(LoginView) };
-            MiMenu.Add(pag1);
-
-            this.lsvmenu.ItemsSource = MiMenu;
-            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Tabbed)));
-
+            this.Paginas();
             this.lsvmenu.ItemSelected += Lsvmenu_ItemSelected;
-            this.btnMML.Clicked += BtnMML_Clicked;
+            //this.btnMML.Clicked += BtnMML_Clicked;
         }
-
-        private void BtnMML_Clicked(object sender, EventArgs e)
+        public void Paginas()
         {
+            this.MiMenu = new List<PaginaMenu>();
+            session = App.Locator.SessionService;
+            var home = new PaginaMenu()
+            {
+                Titulo = "Home",
+                Icono = "Home.png",
+                Pagina = typeof(Tabbed)
+            };
+            this.MiMenu.Add(home);
+            if (session.Token == null || session.Token == "")
+            {
+                var page1 = new PaginaMenu()
+                {
+                    Titulo = "Login",
+                    Icono="Login.png",
+                    Pagina = typeof(LoginView)
+                };
+                this.MiMenu.Add(page1);
+            }
+            else
+            {
+                var perfil = new PaginaMenu()
+                {
+                    Titulo = "Perfil",                    
+                    Pagina = typeof(PerfilView)
+                };
+                this.MiMenu.Add(perfil);
+
+                var lista = new PaginaMenu()
+                {
+                    Titulo = "Mi lista",
+                    Pagina = typeof(ListaPeliculasUsuario)
+                };
+                this.MiMenu.Add(lista);
+
+                var logout = new PaginaMenu()
+                {
+                    Titulo = "Logout",
+                    Pagina = typeof(Tabbed)
+                };
+                this.MiMenu.Add(logout);
+            }
+            this.lsvmenu.ItemsSource = this.MiMenu;
             Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Tabbed)));
-
             IsPresented = false;
-            
-
         }
+
+        //private void BtnMML_Clicked(object sender, EventArgs e)
+        //{
+        //    Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Tabbed)));
+
+        //    IsPresented = false;          
+        //}
 
         private void Lsvmenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             PaginaMenu pagina = e.SelectedItem as PaginaMenu;
 
             Detail = new NavigationPage((Page)Activator.CreateInstance(pagina.Pagina));
-
             IsPresented = false;
+            if (pagina.Titulo == "Logout")
+            {
+                session.Token = null;
+                session.Usuario = null;
+                session.ListaPeliculas = null;
+                this.Paginas();
+            }
         }
 
         private void  SearchBar_SearchButtonPressed(object sender, EventArgs e)

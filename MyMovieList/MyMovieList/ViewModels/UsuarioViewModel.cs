@@ -7,15 +7,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TMDbLib.Client;
+using TMDbLib.Objects.General;
+using TMDbLib.Objects.Movies;
+using TMDbLib.Objects.Search;
 using Xamarin.Forms;
 
 namespace MyMovieList.ViewModels
 {
-    public class UsuarioViewModel: ViewModelBase
+    public class UsuarioViewModel : ViewModelBase
     {
         RepositoryMyMovieList repo;
         SessionService session;
         String oldpass;
+        String APIKey = "c2b4a384b10d259a72d4671a10065bc6";
         public UsuarioViewModel()
         {
             this.repo = new RepositoryMyMovieList();
@@ -35,6 +40,51 @@ namespace MyMovieList.ViewModels
             Usuario usuario = await this.repo.PerfilUsuario(session.Token);
             this.Usuario = usuario;
         }
+        public async Task GetListaPeliculas()
+        {
+            List<String> lista = await this.repo.ListaUsuario(session.Token);
+            foreach (String id in lista)
+            {
+                TMDbClient client = new TMDbClient(APIKey);
+                Movie peli = client.GetMovieAsync(id, "es").Result;
+                session.ListaPeliculas.Add(peli);
+            }
+            this.ListaUsuario = session.ListaPeliculas;
+        }
+        public Command DetallesPelicula
+        {
+            get
+            {
+                return new Command(async (pelicula) =>
+                {
+                    DetallesPeliculaPopular view = new DetallesPeliculaPopular();
+                    PeliculaViewModel viewmodel = new PeliculaViewModel();
+                    Movie peli = pelicula as Movie;
+                    //Movie peli = await this.repo.DetallesPelicula(movie.Id);
+                    Credits actores = await this.repo.RepartoPelicula(peli.Id);
+                    ImagesWithId imagenes = await this.repo.ImagenesPelicula(peli.Id);
+                    List<Genre> generos = peli.Genres;
+                    viewmodel.Pelicula = peli as Movie;
+                    viewmodel.Actores = actores as Credits;
+                    viewmodel.Imagenes = imagenes as ImagesWithId;
+                    viewmodel.Generos = generos as List<Genre>;
+                    view.BindingContext = viewmodel;
+                    await Application.Current.MainPage.Navigation.PushModalAsync(view);
+
+                });
+            }
+        }
+        public Command ListaPeliculas
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    ListaPeliculasUsuario view = new ListaPeliculasUsuario();
+                    await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                });
+            }
+        }
         private Usuario _Usuario;
         public Usuario Usuario
         {
@@ -43,6 +93,16 @@ namespace MyMovieList.ViewModels
             {
                 this._Usuario = value;
                 OnPropertyChanged("Usuario");
+            }
+        }
+        private List<Movie> _ListaUsuario;
+        public List<Movie> ListaUsuario
+        {
+            get { return this._ListaUsuario; }
+            set
+            {
+                this._ListaUsuario = value;
+                OnPropertyChanged("ListaUsuario");
             }
         }
         public Command Registro
@@ -99,12 +159,13 @@ namespace MyMovieList.ViewModels
                         await this.repo.EditarUsuario(this.Usuario);
                         session.Usuario = null;
                         session.Token = null;
-                        PrincipalMaster view = new PrincipalMaster();
+                        PaginaMaestra view = new PaginaMaestra();
                         await Application.Current.MainPage.Navigation.PushModalAsync(view);
                     }
                 });
             }
         }
+
         public Command NuevoUsuario
         {
             get
@@ -142,11 +203,9 @@ namespace MyMovieList.ViewModels
                     {
                         session.Token = token;
                         session.Usuario = await this.repo.PerfilUsuario(session.Token);
-                        PerfilView view = new PerfilView();
-                        UsuarioViewModel viewmodel = new UsuarioViewModel();
-                        viewmodel.Usuario = session.Usuario;
-                        view.BindingContext = viewmodel;
+                        PaginaMaestra view = new PaginaMaestra();
                         await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                        await this.GetListaPeliculas();
                     }
                 });
             }

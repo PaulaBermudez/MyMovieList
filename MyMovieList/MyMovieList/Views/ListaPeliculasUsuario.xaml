@@ -1,24 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:MyMovieList.ViewModels"
-             x:Name="vistaperfil"
+             x:Name="vistalistapelisusuario"
              xmlns:local="clr-namespace:MyMovieList"
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=UsuarioViewModel}"
-             xmlns:control="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
-             x:Class="MyMovieList.Views.PerfilView">
+             x:Class="MyMovieList.Views.ListaPeliculasUsuario">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#2A2B2A" x:Name="stackperfil">
-            <Image Source="defecto.jpg" WidthRequest="150" HeightRequest="150" Margin="0,30,0,0" />
-            <Label Text="{Binding Usuario.NombreUsuario}" HorizontalOptions="CenterAndExpand" TextColor="GhostWhite" FontSize="30"/>
-            <Label Text="{Binding Usuario.Email}" HorizontalOptions="CenterAndExpand" TextColor="GhostWhite" FontSize="20"/>
-            <Label Text="********" HorizontalOptions="CenterAndExpand" TextColor="GhostWhite" FontSize="30"/>
-            <Button Text="Editar usuario" Command="{Binding EditarUsuario}" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A" Margin="10,10,10,0"/>
-            <!--<Frame Margin="20,20,20,20" OutlineColor="Red" VerticalOptions="FillAndExpand" BackgroundColor="">-->
-            <ContentView HorizontalOptions="FillAndExpand" HeightRequest="110">
-                <control:CarouselView x:Name="lstPelis">
-                    <control:CarouselView.ItemTemplate>
-                        <DataTemplate>
+        <StackLayout BackgroundColor="#2A2B2A">
+            <ListView x:Name="lstPelis" HasUnevenRows="True" RowHeight="100">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
                             <StackLayout Orientation="Horizontal">
                                 <Image Source="{Binding BackdropPath, StringFormat='https://image.tmdb.org/t/p/w200{0}'}"
                                        HeightRequest="100" WidthRequest="100" Margin="15,0,15,0"/>
@@ -37,16 +29,14 @@
                                        WidthRequest="30" HeightRequest="35" Margin="0,0,15,0">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer CommandParameter="{Binding .}"
-                                        Command="{Binding BindingContext.DetallesPelicula, Source={x:Reference vistaperfil}}"/>
+                                        Command="{Binding BindingContext.DetallesPelicula, Source={x:Reference vistalistapelisusuario}}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
                             </StackLayout>
-                        </DataTemplate>
-                    </control:CarouselView.ItemTemplate>
-                </control:CarouselView>
-            </ContentView>
-            <Button Text="Ver mi lista" Command="{Binding ListaPeliculas}" HorizontalOptions="FillAndExpand" BackgroundColor="GhostWhite" BorderRadius="30" TextColor="#2A2B2A" Margin="10,10,10,0"/>
-            <!--</Frame>-->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
