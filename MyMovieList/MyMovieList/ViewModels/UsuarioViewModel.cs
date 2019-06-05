@@ -6,6 +6,7 @@ using MyMovieList.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MyMovieList.ViewModels
@@ -14,6 +15,7 @@ namespace MyMovieList.ViewModels
     {
         RepositoryMyMovieList repo;
         SessionService session;
+        String oldpass;
         public UsuarioViewModel()
         {
             this.repo = new RepositoryMyMovieList();
@@ -23,6 +25,15 @@ namespace MyMovieList.ViewModels
             {
                 this.Usuario = new Usuario();
             }
+            if (session.Usuario != null)
+            {
+                oldpass = session.Usuario.Password;
+            }
+        }
+        public async Task CargarUsuario()
+        {
+            Usuario usuario = await this.repo.PerfilUsuario(session.Token);
+            this.Usuario = usuario;
         }
         private Usuario _Usuario;
         public Usuario Usuario
@@ -56,6 +67,41 @@ namespace MyMovieList.ViewModels
                     viewmodel.Usuario = session.Usuario;
                     view.BindingContext = viewmodel;
                     await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                    MessagingCenter.Subscribe<UsuarioViewModel>(this, "UPDATE", async (sender) =>
+                    {
+                        await this.CargarUsuario();
+                    });
+                });
+            }
+        }
+        public Command ValidarEdicion
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    if (this.Usuario.Password == oldpass && this.Usuario.Password == this.Usuario.Password2)
+                    {
+                        await this.repo.EditarUsuario(this.Usuario);
+                        EditarUsuarioView view = new EditarUsuarioView();
+                        UsuarioViewModel viewmodel = new UsuarioViewModel();
+                        viewmodel.Usuario = session.Usuario;
+                        view.BindingContext = viewmodel;
+                        await Application.Current.MainPage.Navigation.PopModalAsync(true);
+                        MessagingCenter.Send<UsuarioViewModel>(App.Locator.UsuarioViewModel, "UPDATE");
+                    }
+                    else if (this.Usuario.Password != this.Usuario.Password2)
+                    {
+                        this.Error = "Las contraseñas no coinciden";
+                    }
+                    else
+                    {
+                        await this.repo.EditarUsuario(this.Usuario);
+                        session.Usuario = null;
+                        session.Token = null;
+                        PrincipalMaster view = new PrincipalMaster();
+                        await Application.Current.MainPage.Navigation.PushModalAsync(view);
+                    }
                 });
             }
         }
